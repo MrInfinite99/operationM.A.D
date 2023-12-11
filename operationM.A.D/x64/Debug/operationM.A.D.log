@@ -1,0 +1,4 @@
+﻿  game.cpp
+D:\operationM.A.D\operationM.A.D\components.h(42,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\components.h(42,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  operationM.A.D.vcxproj -> D:\operationM.A.D\x64\Debug\operationM.A.D.exe
