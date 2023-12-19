@@ -22,11 +22,11 @@ public:
 
 	void set_texture(std::string string) {
 		Texture.loadFromFile(string);
-		sf::Sprite l_sprite(Texture);
+		sf::Sprite l_sprite(Texture,sf::IntRect(0,0,32,32));
 		Sprite = l_sprite;
 	}
 
-	sf::Texture get_texture() {
+	sf::Texture& get_texture() {
 		return Texture;
 	}
 

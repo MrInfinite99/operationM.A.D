@@ -1,4 +1,64 @@
 ﻿  game.cpp
+D:\operationM.A.D\operationM.A.D\systems.h(27,89): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(27,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(29,96): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(29,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(31,95): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(31,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(33,101): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(33,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(70,39): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(71,40): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(90,38): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(91,37): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
 D:\operationM.A.D\operationM.A.D\components.h(42,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 D:\operationM.A.D\operationM.A.D\components.h(42,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   operationM.A.D.vcxproj -> D:\operationM.A.D\x64\Debug\operationM.A.D.exe
