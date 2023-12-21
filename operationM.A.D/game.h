@@ -2,6 +2,8 @@
 #include<SFML/Graphics.hpp>
 #include<iostream>
 #include"Entities.h"
+#include <vector>
+#include<set>
  
 class Game:public CGraphic,protected Entity
 {
@@ -11,7 +13,10 @@ public:
 	sf::Texture mPlayerTexture;
 	sf::Texture Running;
 	sf::Texture Jumping;
-	
+	sf::Texture mopenMenuTexture;
+	sf::Texture level1;
+	sf::Texture level1grass;
+	sf::Texture texCutscene;
 private:
 	void processEvents();
 	void render();
@@ -19,15 +24,26 @@ private:
 private:
 	sf::RenderWindow mWindow;
 	sf:: Sprite mPlayer;
-	
+	sf::Sprite mopenMenu;
+	sf::Sprite Cutscene;//just how many sprites maybe a vector??
+
+
 	sf::RectangleShape mPlatform;
 	sf::Vector2f p_Position;
+	sf::Vector2f old_Position;
+	sf::VertexArray background;
+	sf::VertexArray grass;
 	 
-	sf::Texture backTex;
 	bool isJump;
 	bool isRunning;
+	bool isFrontFace;/*********/
+	bool isBackFace;/**********/
 	bool isShooting;
 	bool isMouseLeft;
+	bool isStarted;
+	bool isPaused;
+
+	bool Edeath;/*temporary fix fpr enemy death*/
 	sf::View view2;
 	float gravity;
 	float counter;
@@ -36,20 +52,23 @@ private:
 	sf::Clock clock;
 	sf::Time dt1;
 	float dt2;
+	float Cutscene_dt=0.0;
 	Animation animationF;
 	Animation animationU;
 	Enemy low1;
 
 	bullets p_bullets;
+	sf::Event event;
+	sf::FloatRect bBoxPlayer;
+	sf::FloatRect bBoxGrass;
+	sf::FloatRect bBoxBackground;
+	std::vector < sf::FloatRect > collider;
 };
  
 
 Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
-	//mPlayer.setSize(sf::Vector2f(50.0f, 50.0f));
-	//mPlayer.setScale(2, 2);
-	//mPlayer.setOrigin(mPlayer.getSize().x / 2, mPlayer.getSize().y / 2);
-	//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\aimUp.png");
-	
+	mopenMenuTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\openScene.png");
+	mopenMenu.setTexture(mopenMenuTexture);
 	p_Position.x = 400;
 	p_Position.y = 300;
 	mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\frontface.png");
@@ -60,7 +79,7 @@ Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
 	
 	//my youth do da animashion here
 	Running.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\running.png");
-	 animationF.setAnimation(&Running, sf::Vector2u(6, 2), 0.006f);
+	 animationF.setAnimation(&Running, sf::Vector2u(6, 3), 0.006f);
 	Jumping.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\jumping.png");
 	animationU.setAnimation(&Jumping, sf::Vector2u(4, 1),0.0009f);
 
@@ -75,7 +94,7 @@ Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
 	
 	
 	//bullet.............................................................................
-	p_bullets.setBullet("D:\\operationM.A.D\\operationM.A.D\\Assets\\bullet.png", mPlayer.getPosition(), sf::Vector2f(10, 0));
+	p_bullets.setBullet("D:\\operationM.A.D\\operationM.A.D\\Assets\\bullet.png", sf::Vector2f(400,310), sf::Vector2f(10, 0)); //mPlayer.getPosition()
 
 
 
@@ -83,12 +102,21 @@ Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
 	isRunning = false;
 	isShooting = false;
 	isMouseLeft = false;
+	isBackFace = false;
+	isFrontFace = true;
+	isStarted = true;
+	isPaused = true;
+	Edeath = false;
+
 	gravity = 75.0f;
 	counter = 0.0f;
-	backTex.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backtex.png");
+	level1.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backtex.png");
+	level1grass.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\grass.png");
+	bBoxPlayer = mPlayer.getLocalBounds();//set the bounding parameters of the BBox
+	
 	//Back.scale(3, 3);
 	
-	 
+	//collider = { mPlayer.getLocalBounds() ,bBoxBackground,bBoxGrass};
 }
 
 
@@ -97,125 +125,211 @@ void Game::run() {
  low1.setEnemy( 1, sf::Vector2u(6,1), 0.006f,sf::Vector2f(-50, 300));
 	view2.setCenter(sf::Vector2f(400.f, 300.f));
 	view2.setSize(sf::Vector2f(800.f, 600.f));
+	 
 	clock;//clcok starts***************************************************************CLOCK*********************************************
+	createbackground(background,1,64,128,6,110,400-25,bBoxBackground);
+	createbackground(grass, 1, 64,96, 1, 110,300-25,bBoxGrass);
 	while (mWindow.isOpen()) {
-		
+		bBoxPlayer.left = mPlayer.getPosition().x;
+		bBoxPlayer.top = mPlayer.getPosition().y;
 		mWindow.setView(view2);
 		dt1 = clock.restart();
 		dt2 = dt1.asSeconds();
+		 
 		//createbackground(background,sf::IntRect(0,0,2048,256));
 		processEvents();
 		update();
 		render();
+		 
 	}
 }
 
 void Game::processEvents() {
-	sf::Event event;
+	
+	std::set<sf::Keyboard::Key> pressedKeys;
 	sf::Vector2f coordi(0.f, 0.f);
+	if (event.type == sf::Event::KeyPressed) {
+		pressedKeys.insert(event.key.code);
+	}
+	else if (event.type == sf::Event::KeyReleased) {
+		pressedKeys.erase(event.key.code);
+	}
 	while (mWindow.pollEvent(event)) {
 		if (event.type == sf::Event::Closed) {
 			mWindow.close();
 		}
 		else {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+				isStarted = false;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				isPaused= false;
+			}
+			if (!isStarted) {
+				if (!isPaused) {
+					Cutscene_dt = 0.0;
+					if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+						isRunning = false;
+					}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-				mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\aimUp.png");
-				mPlayer.setTexture(mPlayerTexture);
-				sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-				mPlayer.setTextureRect(textureRect);
+					if (false) {
+						mPlayerTexture = Running;
+						animationF.Update(2, dt2);
+						mPlayer.setTextureRect(animationF.uvRect);
+						coordi.x += velocity.getVelocity().x;
+						view2.move(coordi);
 
+						mPlayer.move(coordi);
+					}
+
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {//Run backwards
+						//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backface.png");
+						//mPlayer.setTexture(mPlayerTexture);
+						isFrontFace = false;
+						isBackFace = true;
+						isRunning = true;
+						mPlayerTexture = Running;
+						animationF.Update(1, dt2);
+
+						mPlayer.setTextureRect(animationF.uvRect);
+
+
+						coordi.x -= velocity.getVelocity().x;
+						view2.move(coordi);
+						mPlayer.move(coordi);
+
+
+					}
+					else if (((!isRunning) && (isBackFace))) {
+						isRunning = false;
+
+
+						mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backface.png");
+						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+						mPlayer.setTextureRect(textureRect);
+
+					}
+
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {//Run front
+						//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\frontface.png");
+						//mPlayer.setTexture(mPlayerTexture);
+						isFrontFace = true;
+						isRunning = true;
+						isBackFace = false;
+						mPlayerTexture = Running;
+						animationF.Update(0, dt2);
+
+						mPlayer.setTextureRect(animationF.uvRect);
+
+
+						//sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+						//mPlayer.setTextureRect(textureRect);
+
+						coordi.x += velocity.getVelocity().x;
+						view2.move(coordi);
+
+						mPlayer.move(coordi);
+					}
+					else if ((!isRunning) && (isFrontFace)) {
+						isRunning = false;
+						mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\frontface.png");
+						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+						mPlayer.setTextureRect(textureRect);
+
+					}
+
+
+
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {// lay down
+						mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\layingDown.png");
+						mPlayer.setTexture(mPlayerTexture);
+						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+						mPlayer.setTextureRect(textureRect);
+
+
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+
+						mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\aimUp.png");
+						mPlayer.setTexture(mPlayerTexture);
+						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+						mPlayer.setTextureRect(textureRect);
+
+
+					}
+
+					//Jumping and shooting controls brother
+
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {//jump mechanics................................
+						isJump = true;//the O button corresponds to the number "0"
+
+					}
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {//Shoot mechanics//the X button corresponds to the number "0"
+						isShooting = true;
+						//isMouseLeft = true;
+					}
+					else {
+						isShooting = false;
+						p_bullets.replaceBullet(mPlayer.getPosition());
+					}
+
+					//if(sf::Event::MouseButtonReleased)
+
+
+
+
+
+					//Collision mechanics
 				}
-			else {
-				//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\frontface.png");
 			}
-			
-			 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-				//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backface.png");
-				//mPlayer.setTexture(mPlayerTexture);
-
-				mPlayerTexture = Running;
-				animationF.Update(1, dt2);
-
-				mPlayer.setTextureRect(animationF.uvRect);
-				//sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-				//mPlayer.setTextureRect(textureRect);
-
-				coordi.x -= velocity.getVelocity().x;
-				view2.move(coordi);
-				mPlayer.move(coordi);
-			
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\frontface.png");
-				//mPlayer.setTexture(mPlayerTexture);
-				mPlayerTexture = Running;
-				animationF.Update(0, dt2);
-				 
-				mPlayer.setTextureRect(animationF.uvRect);
-
-				
-				//sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-				//mPlayer.setTextureRect(textureRect);
-				
-				coordi.x += velocity.getVelocity().x;
-				view2.move(coordi);
-				//mWindow.setView(view2);
-				mPlayer.move(coordi);
-
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-				mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\layingDown.png");
-				mPlayer.setTexture(mPlayerTexture);
-				sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-				mPlayer.setTextureRect(textureRect);
-				 
-				 
-			}
-
-          //Jumping and shooting controls brother
-
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Middle)) {//jump mechanics................................
-				isJump = true;
-				
-			}
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {//Shoot mechanics
-				isShooting = true;
-				//isMouseLeft = true;
-			}
-			else {
-				isShooting = false;
-				p_bullets.replaceBullet(mPlayer.getPosition());
-			}
-
-			//if(sf::Event::MouseButtonReleased)
-			 
-			 
-
-			 
-			
-			//Collision mechanics
-
 		}
-	}
 		//apply gravity
-	//coordi.y += gravity*dt1.asSeconds();
-	//mPlayer.move(coordi);
-
+	
+	}
 }
 
 //Double buffer here and draw all that.........................
 void Game::render()
 {
+	
 	mWindow.clear(sf::Color::Black);
 	if (isRunning == true) {
 
 	}
+	
+	mWindow.draw(background, &level1);
+	mWindow.draw(grass, &level1grass);
 	p_bullets.drawBullet(mWindow);
-	low1.Edraw(mWindow, dt2);
-	mWindow.draw(mPlayer);
+	if (!Edeath ){
+		low1.Edraw(mWindow, dt2);
+	}
 	mWindow.draw(mPlatform);
+	mWindow.draw(mPlayer);
+	if (isStarted) {
+		mWindow.draw(mopenMenu);
+	}
+	if (!isStarted) {
+		if (isPaused) {
+			Cutscene_dt += dt2;
+			texCutscene.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\scene2.png");
+			Cutscene.setTexture(texCutscene);
+			mWindow.draw(Cutscene);
+			if (Cutscene_dt > 3.0) {
+				texCutscene.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\scene3.png");
+				Cutscene.setTexture(texCutscene);
+				mWindow.draw(Cutscene);
+			}
+			if (Cutscene_dt > 6.0) {
+				texCutscene.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\scene4.png");
+				Cutscene.setTexture(texCutscene);
+				mWindow.draw(Cutscene);
+				if (Cutscene_dt > 9.0) {
+					isPaused = false;
+				}
+			}
+
+		}
+	}
 	mWindow.display();
 }
 
@@ -223,6 +337,11 @@ void Game::render()
 
 //jumping is almost done
 void Game::update() {
+	sf::Vector2f coordi(0.f, 0.f);
+	//coordi.y += gravity * dt1.asSeconds();
+	//mPlayer.move(coordi);
+
+
 	if (isJump) {
 		mPlayer.move(0, -gravity*2 * dt1.asSeconds());
 		counter += gravity * 2 * dt1.asSeconds();
@@ -236,10 +355,33 @@ void Game::update() {
 		}
 	 }
 	if (isShooting) {
-		p_bullets.Shoot(dt1, mPlayer.getPosition(),isShooting);
-
+		if (isFrontFace) {
+			p_bullets.setBulletVelocity(sf::Vector2f(10,0));
+			p_bullets.Shoot(dt1, mPlayer.getPosition(), isShooting);
+			
+		}
+		if (isBackFace) {
+			p_bullets.setBulletVelocity(sf::Vector2f(-10,0));
+			p_bullets.Shoot(dt1, mPlayer.getPosition(), isShooting);
+		}
+		 
 	}
 	 
+	 
+		
+		/*(if (collision_detection(collider[0], collider[2])) {
+			mPlayer.setPosition(400,300);
+			std::cout << "working" << std::endl;
+		}*/
+	/*if (bBoxPlayer.intersects(low1.Ecollider())) {
+		std::cout << "KABOOM!!!!! STOP THE COUNT" << std::endl;
+		mPlayer.move(10,0);
+		view2.move(10,0);
+	}*/
+	if (low1.Ecollider().intersects(p_bullets.BulletCollider())) {
+		Edeath=true;
+		std::cout << "KABOOM!!!!! STOP THE COUNT" << std::endl;
+	}
 	
 }
 	

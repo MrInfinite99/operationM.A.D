@@ -29,7 +29,7 @@ public:
 	
 	 void setEnemy(int Etype, sf::Vector2u EimageCount, float EswitchTime,sf::Vector2f Eposition) {
 		
-		
+		 state = true;
 		 if (Etype == low) {
 			 if (!Etexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\lowSoldier.png")) {
 
@@ -53,6 +53,21 @@ public:
 		 Ewindow.draw(Esprite);
 	 }
 
+	 sf::FloatRect Ecollider() {
+		bBoxEnemy= Esprite.getLocalBounds();
+		bBoxEnemy.left = Esprite.getPosition().x;
+		bBoxEnemy.top = Esprite.getPosition().y;
+		return bBoxEnemy;
+	 }
+
+	 void Edeath(bool l_state) {
+		 state = l_state;
+
+	}
+	 bool Ealive() {
+		 return state;
+	 }
+
 protected:
 	sf::Texture Etexture;
 	Animation enemy;
@@ -62,7 +77,8 @@ protected:
 	 mid =2,
 
 	};
-
+	sf::FloatRect bBoxEnemy;
+	bool state;
 };
  
 class bullets {
@@ -83,6 +99,11 @@ public:
 		mbullet_Sprite.setTexture(mbullet_Texture);
 		mbullet_Position = l_playerPosition;
 		mbullet_Sprite.setPosition(mbullet_Position);
+		bBoxBullet = mbullet_Sprite.getLocalBounds();
+
+		bBoxBullet.left = mbullet_Sprite.getPosition().x;//set BBox positions
+		bBoxBullet.top = mbullet_Sprite.getPosition().y;
+
 
 		mbullet_Velocity = l_velocity;
 	}
@@ -96,6 +117,8 @@ public:
 			l_state = false;
 		}
 				mbullet_Sprite.move(mbullet_Velocity.x * time.asSeconds()*2000, mbullet_Velocity.y * time.asSeconds());
+				bBoxBullet.left = mbullet_Sprite.getPosition().x;//set BBox positions again because SFML was pussy enough to not give a move function for Rect or maybe it just automaticall moves
+				bBoxBullet.top = mbullet_Sprite.getPosition().y;
 				//mbullet_Position.y += mbullet_Velocity.y * time.asSeconds();
 				
 			 //while ((mbullet_Sprite.getPosition().x < l_playerPosition.x + 400) && (mbullet_Sprite.getPosition().x > l_playerPosition.x - 400) && (mbullet_Sprite.getPosition().y < l_playerPosition.y + 300) && (mbullet_Sprite.getPosition().y > l_playerPosition.y - 300));
@@ -113,12 +136,21 @@ public:
 		mbullet_Sprite.setPosition(l_position);
 	}
 
+	sf::FloatRect BulletCollider() {
+		return bBoxBullet;
+	}
+
+	void setBulletVelocity(sf::Vector2f l_velocity) {
+		mbullet_Velocity = l_velocity;
+	}
+
 
 protected:
 	sf::Texture mbullet_Texture;
 	sf::Sprite  mbullet_Sprite;
 	sf::Vector2f mbullet_Position;
 	sf::Vector2f mbullet_Velocity;
+	sf::FloatRect bBoxBullet;
 
 
 
