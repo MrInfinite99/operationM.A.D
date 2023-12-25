@@ -1,14 +1,14 @@
 #pragma once
 #include<SFML/Graphics.hpp>
-
+ 
 //#include"Entities.h"
 
  
 
 
 //background.setPrimitiveType(sf::Quads);
-int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l_tilesize_y,int l_worldheight,int l_worldwidth,float l_positiony,sf::FloatRect area) {//, sf::IntRect area
-
+int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l_tilesize_y,int l_worldheight,int l_worldwidth,float l_positiony) {//, sf::IntRect area
+	 
 	 int tile_size_x = l_tilesize_x;
 	 int tile_size_y = l_tilesize_y;
 	  int tile_types = l_tiletypes;
@@ -16,25 +16,24 @@ int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l
 
 	int worldWidth = l_worldwidth;//width in term of tiles make sure that the actual world width is divisible by the tilesize
 	int worldHeight = l_worldheight;//height in term of tiles
-
+	int h;
 	rVA.setPrimitiveType(sf::Quads);
 	rVA.resize(worldWidth * worldHeight * VERTS_IN_QUAD);
 
 	int currentVertex = 0;
 
 	for (int w = 0; w < worldWidth; w++) {
-		for (int h = 0; h < worldHeight; h++) {
+		for ( h = 0; h < worldHeight; h++) {
 			rVA[currentVertex + 0].position = sf::Vector2f(w * tile_size_x, l_positiony+h * tile_size_y);
-
 			rVA[currentVertex + 1].position = sf::Vector2f((w + 1) * tile_size_x, l_positiony +(h)*tile_size_y);
 			rVA[currentVertex + 2].position = sf::Vector2f((w + 1) * tile_size_x, l_positiony +(h + 1) * tile_size_y);
 			rVA[ currentVertex+ 3].position = sf::Vector2f(w * tile_size_x, l_positiony + (h + 1) * tile_size_y);
 
-			
+		
 
 			//tex coordinates
 			rVA[currentVertex + 3].texCoords = sf::Vector2f(0, 0 + tile_types * tile_size_y);
-
+			
 			rVA[currentVertex + 2].texCoords = sf::Vector2f(tile_size_x, 0 +tile_types * tile_size_y);
 
 			rVA[currentVertex+ 1].texCoords = sf::Vector2f(tile_size_x, 0);//TILE_SIZE + TILE_TYPES * TILE_SIZE
@@ -43,6 +42,8 @@ int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l
 
             currentVertex = currentVertex + VERTS_IN_QUAD;//reminder that VERTS_IN_QUAD == four 4
 		}
+		///area[w].left = w * tile_size_x;
+		//area[w].top = l_positiony + (h - 1) * tile_size_y;
 	} 
 	return tile_size_x;
 
@@ -93,11 +94,11 @@ Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switch
 void Animation::Update(int row, float deltaTime) {
 	currentImage.y = row;
 	totalTime += deltaTime;
-	 
+	//
 	if (totalTime >= switchTime) {
 		totalTime -= switchTime;
 		currentImage.x++;
-		 
+		//std::cout << currentImage.y << std::endl;
 
 		if (currentImage.x >= imageCount.x) {
 			currentImage.x = 0;

@@ -1,7 +1,7 @@
 #pragma once
 #include "systems.h"
 #include "components.h"
-
+#define NUMBER_OF_OPTIONS 2
  
 class Entity {//define entities here...............
 protected:
@@ -36,19 +36,25 @@ public:
 				 std::cout << "hi";
 			 }
 		 }
+		 if (Etype == high) {
+			 if (!Etexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\highSoldier.png")) {
+
+				 std::cout << "bye";
+			 }
+		 }
 		 
 		 Esprite.setTexture(Etexture);
-		 Esprite.setPosition(Eposition);//for the low Soldier set the position off screen because they come running and then go away
+		 Esprite.setPosition(Eposition); 
 
 		 
 		enemy.setAnimation(&Etexture, EimageCount, EswitchTime);
 		
 	}
 
-	 void Edraw(sf::RenderWindow& Ewindow,float time) {//draws the enemy on screen
+	 void Edraw(sf::RenderWindow& Ewindow,float time,int i) {//draws the enemy on screen
 		//std::cout << Animation::uvRect.width << std::endl;
 		
-		enemy.Update(0, time);
+		enemy.Update(i, time);
 		Esprite.setTextureRect(enemy.uvRect);
 		 Ewindow.draw(Esprite);
 	 }
@@ -74,7 +80,7 @@ protected:
 	sf::Sprite Esprite;
 	enum types {
 	 low =1,
-	 mid =2,
+	 high =2,
 
 	};
 	sf::FloatRect bBoxEnemy;
@@ -116,7 +122,7 @@ public:
 			mbullet_Sprite.setPosition(l_playerPosition);
 			l_state = false;
 		}
-				mbullet_Sprite.move(mbullet_Velocity.x * time.asSeconds()*2000, mbullet_Velocity.y * time.asSeconds());
+				mbullet_Sprite.move(mbullet_Velocity.x * time.asSeconds()*2000, mbullet_Velocity.y * time.asSeconds()*2000);
 				bBoxBullet.left = mbullet_Sprite.getPosition().x;//set BBox positions again because SFML was pussy enough to not give a move function for Rect or maybe it just automaticall moves
 				bBoxBullet.top = mbullet_Sprite.getPosition().y;
 				//mbullet_Position.y += mbullet_Velocity.y * time.asSeconds();
@@ -155,4 +161,77 @@ protected:
 
 
  };
- 
+
+/*****************************************************************************MENU************************/
+class menu {
+public:
+	menu(float width,float height);
+	~menu() {
+	}
+	menu() {
+
+	}
+
+	void menu_draw(sf::RenderWindow &l_window);
+	void menu_moveUp();
+	void menu_moveDown();
+	void set_menu(float width, float height);
+private:
+	sf::Font font;
+	sf::Text text[NUMBER_OF_OPTIONS];
+	int selected_item;
+};
+//
+menu::menu(float width, float height) {
+	if (!font.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\menufont.ttf")) {
+		std::cout << "font not working" << std::endl;
+	}
+	text[0].setFont(font);
+	text[0].setFillColor(sf::Color::Yellow);
+	text[0].setString("PLAY");
+	text[0].setPosition(sf::Vector2f(100 , height / (NUMBER_OF_OPTIONS + 1) * 1));
+	text[1].setFont(font);
+	text[1].setFillColor(sf::Color::Yellow);
+	text[1].setString("OPTIONS");
+	text[1].setPosition(sf::Vector2f(100 , height / (NUMBER_OF_OPTIONS + 1) * 2));
+}
+
+void menu::menu_draw(sf::RenderWindow& l_window) {
+	for (int i = 0; i < NUMBER_OF_OPTIONS; i++) {
+		l_window.draw(text[i]);
+	}
+}
+
+void menu::set_menu(float width, float height) {
+	if (!font.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\menufont.ttf")) {
+		std::cout << "font not working" << std::endl;
+	}
+	text[0].setFont(font);
+	text[0].setFillColor(sf::Color::Red);
+	text[0].setString("PLAY");
+	text[0].setPosition(sf::Vector2f(width /5, height / (NUMBER_OF_OPTIONS + 1) * 1));
+	text[1].setFont(font);
+	text[1].setFillColor(sf::Color::Yellow);
+	text[1].setString("OPTIONS");
+	text[1].setPosition(sf::Vector2f(width/5 , height / (NUMBER_OF_OPTIONS + 1) * 2));
+
+	selected_item=0;
+}
+
+void menu::menu_moveUp() {
+	if (selected_item - 1 >= 0)
+	{
+		text[selected_item].setFillColor(sf::Color::Yellow);
+		selected_item--;
+		text[selected_item].setFillColor(sf::Color::Red);
+	}
+
+}
+void menu::menu_moveDown() {
+	if (selected_item + 1 <NUMBER_OF_OPTIONS)
+	{
+		text[selected_item].setFillColor(sf::Color::Yellow);
+		selected_item++;
+		text[selected_item].setFillColor(sf::Color::Red);
+	}
+}
