@@ -1,0 +1,157 @@
+﻿  components.cpp
+  game.cpp
+D:\operationM.A.D\operationM.A.D\systems.h(27,53): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(28,59): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(29,59): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(30,53): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(35,57): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(37,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(37,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(39,51): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(71,39): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(72,40): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(91,38): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\systems.h(92,37): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+D:\operationM.A.D\operationM.A.D\components.h(42,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\components.h(42,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\game.h(156,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(164,54): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(164,33): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(171,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  window.cpp
+  Generating Code...
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Time::Time(void)" (__imp_??0Time@sf@@QAE@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: float __thiscall sf::Time::asSeconds(void)const " (__imp_?asSeconds@Time@sf@@QBEMXZ) referenced in function "public: void __thiscall bullets::Shoot(class sf::Time,class sf::Vector2<float>,bool)" (?Shoot@bullets@@QAEXVTime@sf@@V?$Vector2@M@3@_N@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Clock::Clock(void)" (__imp_??0Clock@sf@@QAE@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Time __thiscall sf::Clock::restart(void)" (__imp_?restart@Clock@sf@@QAE?AVTime@2@XZ) referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::String(char const *,class std::locale const &)" (__imp_??0String@sf@@QAE@PBDABVlocale@std@@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::~String(void)" (__imp_??1String@sf@@QAE@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (__imp_?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z) referenced in function "private: void __thiscall Game::processEvents(void)" (?processEvents@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static bool __cdecl sf::Mouse::isButtonPressed(enum sf::Mouse::Button)" (__imp_?isButtonPressed@Mouse@sf@@SA_NW4Button@12@@Z) referenced in function "private: void __thiscall Game::processEvents(void)" (?processEvents@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static class sf::Vector2<int> __cdecl sf::Mouse::getPosition(class sf::WindowBase const &)" (__imp_?getPosition@Mouse@sf@@SA?AV?$Vector2@H@2@ABVWindowBase@2@@Z) referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::VideoMode::VideoMode(unsigned int,unsigned int,unsigned int)" (__imp_??0VideoMode@sf@@QAE@III@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::WindowBase::isOpen(void)const " (__imp_?isOpen@WindowBase@sf@@QBE_NXZ) referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::WindowBase::pollEvent(class sf::Event &)" (__imp_?pollEvent@WindowBase@sf@@QAE_NAAVEvent@2@@Z) referenced in function "private: void __thiscall Game::processEvents(void)" (?processEvents@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Window::display(void)" (__imp_?display@Window@sf@@QAEXXZ) referenced in function "private: void __thiscall Game::render(void)" (?render@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RenderStates::RenderStates(class sf::Texture const *)" (__imp_??0RenderStates@sf@@QAE@PBVTexture@1@@Z) referenced in function "private: void __thiscall Game::render(void)" (?render@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setPosition(float,float)" (__imp_?setPosition@Transformable@sf@@QAEXMM@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setPosition(class sf::Vector2<float> const &)" (__imp_?setPosition@Transformable@sf@@QAEXABV?$Vector2@M@2@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<float> const & __thiscall sf::Transformable::getPosition(void)const " (__imp_?getPosition@Transformable@sf@@QBEABV?$Vector2@M@2@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::move(float,float)" (__imp_?move@Transformable@sf@@QAEXMM@Z) referenced in function "public: void __thiscall bullets::Shoot(class sf::Time,class sf::Vector2<float>,bool)" (?Shoot@bullets@@QAEXVTime@sf@@V?$Vector2@M@3@_N@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::move(class sf::Vector2<float> const &)" (__imp_?move@Transformable@sf@@QAEXABV?$Vector2@M@2@@Z) referenced in function "private: void __thiscall Game::processEvents(void)" (?processEvents@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::VertexArray::VertexArray(void)" (__imp_??0VertexArray@sf@@QAE@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Vertex & __thiscall sf::VertexArray::operator[](unsigned int)" (__imp_??AVertexArray@sf@@QAEAAVVertex@1@I@Z) referenced in function "int __cdecl createbackground(class sf::VertexArray &,int,int,int,int,int,float)" (?createbackground@@YAHAAVVertexArray@sf@@HHHHHM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::VertexArray::resize(unsigned int)" (__imp_?resize@VertexArray@sf@@QAEXI@Z) referenced in function "int __cdecl createbackground(class sf::VertexArray &,int,int,int,int,int,float)" (?createbackground@@YAHAAVVertexArray@sf@@HHHHHM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::VertexArray::setPrimitiveType(enum sf::PrimitiveType)" (__imp_?setPrimitiveType@VertexArray@sf@@QAEXW4PrimitiveType@2@@Z) referenced in function "int __cdecl createbackground(class sf::VertexArray &,int,int,int,int,int,float)" (?createbackground@@YAHAAVVertexArray@sf@@HHHHHM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::VertexArray::~VertexArray(void)" (__imp_??1VertexArray@sf@@UAE@XZ) referenced in function __unwindfunclet$??0Game@@QAE@XZ$30
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::Texture(void)" (__imp_??0Texture@sf@@QAE@XZ) referenced in function "public: __thiscall CGraphic::CGraphic(void)" (??0CGraphic@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::Texture(class sf::Texture const &)" (__imp_??0Texture@sf@@QAE@ABV01@@Z) referenced in function "public: __thiscall CGraphic::CGraphic(class CGraphic const &)" (??0CGraphic@@QAE@ABV0@@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::~Texture(void)" (__imp_??1Texture@sf@@QAE@XZ) referenced in function __unwindfunclet$??0CGraphic@@QAE@XZ$0
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (__imp_?loadFromFile@Texture@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$Rect@H@2@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<unsigned int> __thiscall sf::Texture::getSize(void)const " (__imp_?getSize@Texture@sf@@QBE?AV?$Vector2@I@2@XZ) referenced in function "public: __thiscall Animation::Animation(class sf::Texture *,class sf::Vector2<unsigned int>,float)" (??0Animation@@QAE@PAVTexture@sf@@V?$Vector2@I@2@M@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Texture & __thiscall sf::Texture::operator=(class sf::Texture const &)" (__imp_??4Texture@sf@@QAEAAV01@ABV01@@Z) referenced in function "public: class CGraphic & __thiscall CGraphic::operator=(class CGraphic const &)" (??4CGraphic@@QAEAAV0@ABV0@@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Font::Font(void)" (__imp_??0Font@sf@@QAE@XZ) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Font::~Font(void)" (__imp_??1Font@sf@@QAE@XZ) referenced in function __unwindfunclet$??0menu@@QAE@MM@Z$0
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Font::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (__imp_?loadFromFile@Font@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RectangleShape::RectangleShape(class sf::Vector2<float> const &)" (__imp_??0RectangleShape@sf@@QAE@ABV?$Vector2@M@1@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RectangleShape::setSize(class sf::Vector2<float> const &)" (__imp_?setSize@RectangleShape@sf@@QAEXABV?$Vector2@M@2@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::RectangleShape::~RectangleShape(void)" (__imp_??1RectangleShape@sf@@UAE@XZ) referenced in function __unwindfunclet$??0Game@@QAE@XZ$18
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::View::View(void)" (__imp_??0View@sf@@QAE@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::View::setCenter(class sf::Vector2<float> const &)" (__imp_?setCenter@View@sf@@QAEXABV?$Vector2@M@2@@Z) referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::View::setSize(class sf::Vector2<float> const &)" (__imp_?setSize@View@sf@@QAEXABV?$Vector2@M@2@@Z) referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::View::move(float,float)" (__imp_?move@View@sf@@QAEXMM@Z) referenced in function "private: void __thiscall Game::update(void)" (?update@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::View::move(class sf::Vector2<float> const &)" (__imp_?move@View@sf@@QAEXABV?$Vector2@M@2@@Z) referenced in function "private: void __thiscall Game::processEvents(void)" (?processEvents@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::clear(class sf::Color const &)" (__imp_?clear@RenderTarget@sf@@QAEXABVColor@2@@Z) referenced in function "private: void __thiscall Game::render(void)" (?render@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::setView(class sf::View const &)" (__imp_?setView@RenderTarget@sf@@QAEXABVView@2@@Z) referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (__imp_?draw@RenderTarget@sf@@QAEXABVDrawable@2@ABVRenderStates@2@@Z) referenced in function "public: void __thiscall Enemy::E_track_player(class sf::RenderWindow &,class sf::Vector2<float>,float)" (?E_track_player@Enemy@@QAEXAAVRenderWindow@sf@@V?$Vector2@M@3@M@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RenderWindow::RenderWindow(class sf::VideoMode,class sf::String const &,unsigned int,struct sf::ContextSettings const &)" (__imp_??0RenderWindow@sf@@QAE@VVideoMode@1@ABVString@1@IABUContextSettings@1@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::RenderWindow::~RenderWindow(void)" (__imp_??1RenderWindow@sf@@UAE@XZ) referenced in function __unwindfunclet$??0Game@@QAE@XZ$13
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(void)" (__imp_??0Sprite@sf@@QAE@XZ) referenced in function "public: __thiscall CGraphic::CGraphic(void)" (??0CGraphic@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(class sf::Texture const &)" (__imp_??0Sprite@sf@@QAE@ABVTexture@1@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTexture(class sf::Texture const &,bool)" (__imp_?setTexture@Sprite@sf@@QAEXABVTexture@2@_N@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTextureRect(class sf::Rect<int> const &)" (__imp_?setTextureRect@Sprite@sf@@QAEXABV?$Rect@H@2@@Z) referenced in function "public: void __thiscall Enemy::E_track_player(class sf::RenderWindow &,class sf::Vector2<float>,float)" (?E_track_player@Enemy@@QAEXAAVRenderWindow@sf@@V?$Vector2@M@3@M@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Rect<float> __thiscall sf::Sprite::getLocalBounds(void)const " (__imp_?getLocalBounds@Sprite@sf@@QBE?AV?$Rect@M@2@XZ) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Sprite::~Sprite(void)" (__imp_??1Sprite@sf@@UAE@XZ) referenced in function __unwindfunclet$??0CGraphic@@QAE@XZ$1
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(class sf::Sprite const &)" (__imp_??0Sprite@sf@@QAE@ABV01@@Z) referenced in function "void __cdecl std::_Construct_in_place<class sf::Sprite,class sf::Sprite const &>(class sf::Sprite &,class sf::Sprite const &)" (??$_Construct_in_place@VSprite@sf@@ABV12@@std@@YAXAAVSprite@sf@@ABV12@@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(class sf::Sprite &&)" (__imp_??0Sprite@sf@@QAE@$$QAV01@@Z) referenced in function "public: static void __cdecl std::_Default_allocator_traits<class std::allocator<class sf::Sprite> >::construct<class sf::Sprite,class sf::Sprite>(class std::allocator<class sf::Sprite> &,class sf::Sprite * const,class sf::Sprite &&)" (??$construct@VSprite@sf@@V12@@?$_Default_allocator_traits@V?$allocator@VSprite@sf@@@std@@@std@@SAXAAV?$allocator@VSprite@sf@@@1@QAVSprite@sf@@$$QAV34@@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: class sf::Sprite & __thiscall sf::Sprite::operator=(class sf::Sprite const &)" (__imp_??4Sprite@sf@@QAEAAV01@ABV01@@Z) referenced in function "public: class CGraphic & __thiscall CGraphic::operator=(class CGraphic const &)" (??4CGraphic@@QAEAAV0@ABV0@@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Text::Text(void)" (__imp_??0Text@sf@@QAE@XZ) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setString(class sf::String const &)" (__imp_?setString@Text@sf@@QAEXABVString@2@@Z) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setFont(class sf::Font const &)" (__imp_?setFont@Text@sf@@QAEXABVFont@2@@Z) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Text::setFillColor(class sf::Color const &)" (__imp_?setFillColor@Text@sf@@QAEXABVColor@2@@Z) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Text::~Text(void)" (__imp_??1Text@sf@@UAE@XZ) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+game.obj : error LNK2001: unresolved external symbol "private: virtual void __thiscall sf::Sprite::draw(class sf::RenderTarget &,class sf::RenderStates)const " (?draw@Sprite@sf@@EBEXAAVRenderTarget@2@VRenderStates@2@@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static class sf::RenderStates const sf::RenderStates::Default" (__imp_?Default@RenderStates@sf@@2V12@B) referenced in function "public: void __thiscall Enemy::E_track_player(class sf::RenderWindow &,class sf::Vector2<float>,float)" (?E_track_player@Enemy@@QAEXAAVRenderWindow@sf@@V?$Vector2@M@3@M@Z)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Black" (__imp_?Black@Color@sf@@2V12@B) referenced in function "private: void __thiscall Game::render(void)" (?render@Game@@AAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Red" (__imp_?Red@Color@sf@@2V12@B) referenced in function "public: void __thiscall menu::menu_moveDown(void)" (?menu_moveDown@menu@@QAEXXZ)
+game.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Yellow" (__imp_?Yellow@Color@sf@@2V12@B) referenced in function "public: __thiscall menu::menu(float,float)" (??0menu@@QAE@MM@Z)
+D:\SFML-2.6.1\lib\sfml-graphics-d.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\SFML-2.6.1\lib\sfml-window-d.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\SFML-2.6.1\lib\sfml-network-d.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\SFML-2.6.1\lib\sfml-system-d.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\SFML-2.6.1\lib\sfml-audio-d.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\operationM.A.D\Debug\operationM.A.D.exe : fatal error LNK1120: 65 unresolved externals

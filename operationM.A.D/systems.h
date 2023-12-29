@@ -7,7 +7,7 @@
 
 
 //background.setPrimitiveType(sf::Quads);
-int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l_tilesize_y,int l_worldheight,int l_worldwidth,float l_positiony) {//, sf::IntRect area
+int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l_tilesize_y,int l_worldheight,int l_worldwidth,float l_positiony,float l_positionx) {//, sf::IntRect area
 	 
 	 int tile_size_x = l_tilesize_x;
 	 int tile_size_y = l_tilesize_y;
@@ -24,10 +24,10 @@ int createbackground(sf::VertexArray& rVA,int l_tiletypes,int l_tilesize_x,int l
 
 	for (int w = 0; w < worldWidth; w++) {
 		for ( h = 0; h < worldHeight; h++) {
-			rVA[currentVertex + 0].position = sf::Vector2f(w * tile_size_x, l_positiony+h * tile_size_y);
-			rVA[currentVertex + 1].position = sf::Vector2f((w + 1) * tile_size_x, l_positiony +(h)*tile_size_y);
-			rVA[currentVertex + 2].position = sf::Vector2f((w + 1) * tile_size_x, l_positiony +(h + 1) * tile_size_y);
-			rVA[ currentVertex+ 3].position = sf::Vector2f(w * tile_size_x, l_positiony + (h + 1) * tile_size_y);
+			rVA[currentVertex + 0].position = sf::Vector2f(w * tile_size_x+ l_positionx, l_positiony+h * tile_size_y);
+			rVA[currentVertex + 1].position = sf::Vector2f((w + 1) * tile_size_x+ l_positionx, l_positiony +(h)*tile_size_y);
+			rVA[currentVertex + 2].position = sf::Vector2f((w + 1) * tile_size_x+ l_positionx, l_positiony +(h + 1) * tile_size_y);
+			rVA[ currentVertex+ 3].position = sf::Vector2f(w * tile_size_x+ l_positionx, l_positiony + (h + 1) * tile_size_y);
 
 		
 
