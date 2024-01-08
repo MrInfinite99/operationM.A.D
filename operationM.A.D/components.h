@@ -2,9 +2,6 @@
 #include<SFML/Graphics.hpp>
 #include<iostream>
 #include"window.h"
-enum class Components{
-
-};
  
 class CGraphic{//sets what an entity is going to look like 
 public:
