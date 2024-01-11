@@ -278,58 +278,69 @@ public:
 		float EnemyAngle = (180.0f / 3.1415f) * atan2f(Esprite.getPosition().x - l_playerPosition.x, Esprite.getPosition().y - l_playerPosition.y);
 		Ebullet.drawBullet(Ewindow);
 		Ewindow.draw(Esprite);
-		if (EnemyAngle > 112.5f && EnemyAngle < 157.5f) {//South west
-			enemy.Update(5, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(-3.16,3.16));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true,100);
-		}
-		if (EnemyAngle > 157.5f && EnemyAngle < 180.0f) {//South
-			enemy.Update(2, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(0, 10));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true,100);
+		
+			if (EnemyAngle > 112.5f && EnemyAngle < 157.5f) {//South west
+				enemy.Update(5, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(-3.16, 3.16));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f)) 
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 100);
+			}
+			if (EnemyAngle > 157.5f && EnemyAngle < 180.0f) {//South
+				enemy.Update(2, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(0, 10));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 100);
 
-		}
-		if (EnemyAngle > -157.5f && EnemyAngle < -112.5f) {//South east
-			enemy.Update(4, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(3.16, 3.16));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
+			}
+			if (EnemyAngle > -157.5f && EnemyAngle < -112.5f) {//South east
+				enemy.Update(4, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(3.16, 3.16));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
 
-		}
-		if (EnemyAngle > -180.0f && EnemyAngle < -157.5f) {//South
-			enemy.Update(2, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(0, 10));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
-		}
-		if (EnemyAngle > 67.5f && EnemyAngle < 112.5f) {//West
-			enemy.Update(1, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(-10, 0));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
+			}
+			if (EnemyAngle > -180.0f && EnemyAngle < -157.5f) {//South
+				enemy.Update(2, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(0, 10));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
+			}
+			if (EnemyAngle > 67.5f && EnemyAngle < 112.5f) {//West
+				enemy.Update(1, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(-10, 0));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
 
-		}
-		if (EnemyAngle > 22.5 && EnemyAngle < 67.5f) {//North West
-			enemy.Update(7, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(-3.16, -3.16));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
+			}
+			if (EnemyAngle > 22.5 && EnemyAngle < 67.5f) {//North West
+				enemy.Update(7, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(-3.16, -3.16));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
 
-		}
-		if (EnemyAngle > -22.5 && EnemyAngle < 22.5f) {//North
-			enemy.Update(3, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(0, -10));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true,10);
+			}
+			if (EnemyAngle > -22.5 && EnemyAngle < 22.5f) {//North
+				enemy.Update(3, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(0, -10));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
 
-		}
-		if (EnemyAngle > -67.5f && EnemyAngle < -22.5f) {//North East
-			enemy.Update(6, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(3.16, -3.16));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
+			}
+			if (EnemyAngle > -67.5f && EnemyAngle < -22.5f) {//North East
+				enemy.Update(6, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(3.16, -3.16));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
 
-		}
-		if (EnemyAngle > -112.5f && EnemyAngle < -67.5f) {//East
-			enemy.Update(0, time);
-			Ebullet.setBulletVelocity(sf::Vector2f(10,0));
-			Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
+			}
+			if (EnemyAngle > -112.5f && EnemyAngle < -67.5f) {//East
+				enemy.Update(0, time);
+				Ebullet.setBulletVelocity(sf::Vector2f(10, 0));
+				if ((Esprite.getPosition().x - l_playerPosition.x < 200.0f) || (-Esprite.getPosition().x + l_playerPosition.x < 200.0f))
+				Ebullet.Shoot(l_time, Esprite.getPosition(), true, 10);
 
-		}
+			}
+		
 		Esprite.setTextureRect(enemy.uvRect);
 		Ewindow.draw(Esprite);
 	}

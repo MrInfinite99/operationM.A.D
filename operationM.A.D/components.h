@@ -1,7 +1,7 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include<iostream>
-#include"window.h"
+ 
  
 class CGraphic{//sets what an entity is going to look like 
 public:

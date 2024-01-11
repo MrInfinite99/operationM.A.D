@@ -59,7 +59,7 @@ private:
 	bool isRunning;
 	bool isAlive;
 	bool hasCollided;
-
+	bool isDead;
 
 
 
@@ -77,6 +77,7 @@ private:
 	bool mainMenu;
 	bool helpMenu;
 	bool settingsMenu;
+	bool isReset;
 
 	bool isSound;
 
@@ -194,8 +195,9 @@ Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
 
 	isJump = false;
 	isRunning = false;
-	isAlive = true;
+	isAlive = false;
 	hasCollided = false;
+	isDead = false;
 
 
 	isShooting = false;
@@ -212,6 +214,7 @@ Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
 	mainMenu = false;
 	helpMenu = false;
 	settingsMenu = false;
+	isReset = false;
 
 	isSound = true;
 
@@ -246,7 +249,7 @@ Game::Game() :mWindow{ sf::VideoMode(800,600),"M.A.D" }, mPlayer() {
 
 	//collider = { mPlayer.getLocalBounds() ,bBoxBackground,bBoxGrass};
 	menu1.set_menu(mWindow.getSize().x, mWindow.getSize().y, "PLAY", "OPTIONS", 5);//5 is a factor width/factor
-	pause_menu.set_menu(mWindow.getSize().x, mWindow.getSize().y, "RESTART", "PRESS ESC TO QUIT", 2);
+	pause_menu.set_menu(mWindow.getSize().x, mWindow.getSize().y, "RESTART", "QUIT", 2);
 	settingmenu.set_menu(mWindow.getSize().x, mWindow.getSize().y, "SOUND OFF","BACK",5);
 
 
@@ -372,7 +375,7 @@ void Game::render()
 {
 
 	mWindow.clear(sf::Color::Black);
-	if (isAlive) {
+	if (isDead) {
 
 		mWindow.setView(view2);
 		mWindow.draw(grass, &level1grass);
@@ -392,10 +395,6 @@ void Game::render()
 		p_bullets.drawBullet(mWindow);
 		mWindow.draw(mPlatform);
 
-
-
-		powerUp.power_draw(mWindow);
-		mWindow.draw(mPlayer);
 		for (int i = 0; i < 6; i++) {
 			if (!high[i].Ealive()) {//not alive
 				high[i].E_track_player(mWindow, sf::Vector2f(mPlayer.getPosition().x, mPlayer.getPosition().y), dt2, dt1);
@@ -403,12 +402,20 @@ void Game::render()
 			}
 		}
 
+		powerUp.power_draw(mWindow);
+		mWindow.draw(mPlayer);
+		
+
 		/*************HUD***************/
 		mWindow.setView(view1);
 		mWindow.draw(HiScoreText);
 		mWindow.draw(LiveText);
 
 
+		
+
+	} 
+	mWindow.setView(view1);
 		if (isStarted) {
 			mWindow.draw(mopenMenu);
 		}
@@ -451,8 +458,11 @@ void Game::render()
 			texCutscene.loadFromFile("..\\operationM.A.D\\Assets\\helpMenu.png");
 			Cutscene.setTexture(texCutscene);
 			mWindow.draw(Cutscene);
-			if (Cutscene_dt > 3.0) {
+			if (Cutscene_dt > 3.0f) {
 				helpMenu = false;
+				Cutscene_dt = 0.0f;
+				isDead = true;
+				isAlive = true;
 			}
 		}
 		if (settingsMenu) {
@@ -463,14 +473,16 @@ void Game::render()
 
 		}
 
-	}
+		if (isReset) {
+		 
+			texCutscene.loadFromFile("..\\operationM.A.D\\Assets\\pauseMenu2.png");
+			Cutscene.setTexture(texCutscene);
+			mWindow.draw(Cutscene);
 
-		
-		if (!isAlive) {
-			  
 			//mWindow.draw();texture to be added
 			pause_menu.menu_draw(mWindow);
 		}
+	
 	
 	mWindow.display();
 }
@@ -482,349 +494,380 @@ void Game::update() {
 		isStarted = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {//////////////////////TEMPORARY DEVELOPMENT BACKDOOR
-		isPaused = false;
+	//	isPaused = false;
 	}
+	/********************************************MENU******************************************************/
+	if (mainMenu) {
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			menu1.menu_moveDown();
+			MainMenuCounter = 1;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			menu1.menu_moveUp();
+
+			MainMenuCounter = 0;
+
+		}
+		if (MainMenuCounter == 0) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				mainMenu = false;
+				helpMenu = true;
+				Cutscene_dt = 0.0f;
+				MainMenuCounter = 0;
+			}
+		}
+		if (MainMenuCounter == 1) {
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+
+				mainMenu = false;
+				settingsMenu = true;
+				MainMenuCounter = 0;
+
+			}
+		}
+	}
+	if (settingsMenu) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			settingmenu.menu_moveDown();
+			MainMenuCounter = 1;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			settingmenu.menu_moveUp();
+
+			MainMenuCounter = 0;
+		}
+		if (MainMenuCounter == 0) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				isSound = false;
+			}
+		}
+		if (MainMenuCounter == 1) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				mainMenu = true;
+				settingsMenu = false;
+				MainMenuCounter = -1;
+
+			}
+		}
+	}
+
 	if (!isStarted) {
 		if (!isPaused) {
-
-			if (isAlive) {
-
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {// lay down
-					mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\layingDown.png");
-					mPlayer.setTexture(mPlayerTexture);
-					sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-					mPlayer.setTextureRect(textureRect);
-					std::cout << "S key pressed" << std::endl;
-					islayingdown = true;
-
-				}
-				else
-					islayingdown = false;
-				//Jumping and shooting controls brother
-
-
-				if ((!islayingdown) || (!isDiagonal)) {
-					if (mouseAngle > 67.5f && mouseAngle < 112.5f) {
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimUp.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(0, -5));
-					}
-					if ((!(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && (mouseAngle > 22.5f && mouseAngle < 67.5f)) {
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimNE.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(2.23, -2.23));
-					}
-					if ((!(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && (mouseAngle > 112.5f && mouseAngle < 157.5f)) {//north west
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimNW.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(-2.23, -2.23));
-					}
-					if (mouseAngle > -67.5f && mouseAngle < -22.5f) {//South East
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimSE.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(2.23, 2.23));
-					}
-					if (mouseAngle > -157.5f && mouseAngle < -112.5f) {//South west
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimSW.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(-2.23, 2.23));
-					}
-					if (mouseAngle > -112.5f && mouseAngle < -67.5f) {//south
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimS.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(0, 5));
-					}
-
-
-					if ((mouseAngle > 157.5f && mouseAngle < 180.0f) || (mouseAngle > -180.0f && mouseAngle < -157.5f)) {//west
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\backface.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(-5, 0));
-					}
-
-					if ((!(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && (mouseAngle > -22.5f && mouseAngle < 22.5f)) {//east
-						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\frontface.png");
-						mPlayer.setTexture(mPlayerTexture);
-						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
-						mPlayer.setTextureRect(textureRect);
-						p_bullets.setBulletVelocity(sf::Vector2f(5, 0));
-					}
-				}
-
-				if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-					isRunning = false;
-				}
-				if (!isDiagonal) {
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {//Run backwards
-						//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backface.png");
-						//mPlayer.setTexture(mPlayerTexture);
-						isFrontFace = false;
-						isBackFace = true;
-						isRunning = true;
-						mPlayerTexture = Running;
-						animationF.Update(1, dt2);
-
-						mPlayer.setTextureRect(animationF.uvRect);
-						if (isSound) {
-							if (!running_sound.getStatus()) {
-								running_sound.play();
-								running_sound.setPlayingOffset(sf::seconds(0.5));
-							}
-						}
-
-						coordi.x -= velocity.getVelocity().x / 10;
-						view2.move(coordi);
-						mPlayer.move(coordi);
-						p_bullets.setBulletVelocity(sf::Vector2f(-5.0f, 0.0f));
-
-
-					}
-
-
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-						isFrontFace = true;
-						isRunning = true;
-						isBackFace = false;
-						mPlayerTexture = Running;
-						animationF.Update(0, dt2);
-
-						mPlayer.setTextureRect(animationF.uvRect);
-						if (isSound) {
-							if (!running_sound.getStatus()) {
-								running_sound.play();
-								running_sound.setPlayingOffset(sf::seconds(0.5));
-							}
-						}
-
-						coordi.x += velocity.getVelocity().x / 10;
-						view2.move(coordi);
-						mPlayer.move(coordi);
-					}
-
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && (mouseAngle > -67.5f && mouseAngle < -22.5f)) {
-					mPlayerTexture = RunningD2;
-					animationD2.Update(0, dt2);
-					mPlayer.setTextureRect(animationF.uvRect);
-					coordi.x += velocity.getVelocity().x / 100;
-					view2.move(coordi);
-					mPlayer.move(coordi);
-					p_bullets.setBulletVelocity(sf::Vector2f(2.23, 2.23));
-					isDiagonal = true;
-					if (isSound) {
-						if (!running_sound.getStatus()) {
-							running_sound.play();
-							running_sound.setPlayingOffset(sf::seconds(0.5));
-						}
-					}
-				}
-				else
-					isDiagonal = false;
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && (mouseAngle > -157.5f && mouseAngle < -122.5f)) {
-					mPlayerTexture = RunningD2;
-					animationD2.Update(1, dt2);
-					mPlayer.setTextureRect(animationF.uvRect);
-					coordi.x -= velocity.getVelocity().x / 100;
-					view2.move(coordi);
-					mPlayer.move(coordi);
-					p_bullets.setBulletVelocity(sf::Vector2f(-2.23, 2.23));
-					isDiagonal = true;
-					if (isSound) {
-						if (!running_sound.getStatus()) {
-							running_sound.play();
-							running_sound.setPlayingOffset(sf::seconds(0.5));
-						}
-					}
-				}
-				else
-					isDiagonal = false;
-				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && (22.5f < mouseAngle && mouseAngle < 67.5f)) {//north east
-
-					mPlayerTexture = RunningD;
-					animationD.Update(0, dt2);
-					mPlayer.setTextureRect(animationD.uvRect);
-					coordi.x += velocity.getVelocity().x / 100;
-					view2.move(coordi);
-					if (isSound) {
-						if (!running_sound.getStatus()) {
-							running_sound.play();
-							running_sound.setPlayingOffset(sf::seconds(0.5));
-						}
-					}
-					mPlayer.move(coordi);
-					p_bullets.setBulletVelocity(sf::Vector2f(2.23, -2.23));
-				}
-				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && (122.5f < mouseAngle && mouseAngle < 157.5f)) {//north west
-
-					mPlayerTexture = RunningD;
-					animationD.Update(1, dt2);
-					mPlayer.setTextureRect(animationD.uvRect);
-					coordi.x -= velocity.getVelocity().x / 100;
-					view2.move(coordi);
-					if (isSound) {
-						if (!running_sound.getStatus()) {
-							running_sound.play();
-							running_sound.setPlayingOffset(sf::seconds(0.5));
-						}
-					}
-					mPlayer.move(coordi);
-					p_bullets.setBulletVelocity(sf::Vector2f(-2.23, -2.23));
-				}
-
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {//jump mechanics................................
-					isJump = true;//the O button corresponds to the number "0"
-
-				}
-
-				/*******SHOOTING*********/
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {//Shoot mechanics//the X button corresponds to the number "0"
-					isShooting = true;
-					if (isSound) {
-						if (!rifle_sound.getStatus()) {
-							rifle_sound.play();
-						}
-					}
-
-				}
-				else {
-					//rifle_sound.stop();
-					isShooting = false;
-					p_bullets.replaceBullet(sf::Vector2f(mPlayer.getPosition().x + 10, mPlayer.getPosition().y + 15));
-
-				}
-
-				/****************/
-				if (mPlayer.getPosition().x < 400.0f) {
-					coordi.x += velocity.getVelocity().x * 10;
-					view2.move(coordi);
-
-					mPlayer.move(coordi);
-				}
-				if (mPlayer.getPosition().x > 4500.0f) {
-					coordi.x -= velocity.getVelocity().x * 10;
-					view2.move(coordi);
-
-					mPlayer.move(coordi);
-				}
-			}
-
-			//std::cout << mouseAngle<< std::endl;
-
-			coordi.y += gravity * dt1.asSeconds();
-			mPlayer.move(coordi);
-			/********************************************MENU******************************************************/
-			if (mainMenu) {
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-					menu1.menu_moveDown();
-					MainMenuCounter = 1;
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-					menu1.menu_moveUp();
-
-				MainMenuCounter = 0; 
-
-				}
-				if (MainMenuCounter == 0) {
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-						mainMenu = false;
-						helpMenu = true;
-						Cutscene_dt = 0.0f;
-					}
-				}
-				if (MainMenuCounter == 1) {
-
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-
-						mainMenu = false;
-						settingsMenu = true;
-						MainMenuCounter = 0;
-
-					}
-				}
-			}
-			if (settingsMenu) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-					settingmenu.menu_moveDown();
-					MainMenuCounter = 1;
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-					settingmenu.menu_moveUp();
-
-					MainMenuCounter = 0;
-				}
-					if (MainMenuCounter == 0) {
-						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-							isSound = false;
-						}
-					}
-					if (MainMenuCounter == 1) {
-						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-							mainMenu = true;
-							settingsMenu = false;
-							MainMenuCounter = -1;
-
-						}
-					}
-				}
-
-				if (!isAlive) {
+			
+			
+				if (isReset) {
+					std::cout << "hi" << std::endl;
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 						pause_menu.menu_moveDown();
+						MainMenuCounter = 1;
 					}
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 						pause_menu.menu_moveUp();
+						MainMenuCounter = 0;
 					}
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-						mWindow.close();
+					if (MainMenuCounter == 1) {
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+							mWindow.close();
+						}
+					}
+				   
+					if (MainMenuCounter == 0) {
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+							isReset = false;
+							mainMenu = true;
+							MainMenuCounter = -1;
+							
+						}
 					}
 				}
-				/******************************************************************************************************************/
+		
+				if (isDead) {
+					
 
-				if (isJump) {
-					mPlayer.move(0, -gravity * 2 * dt1.asSeconds());
-					counter += gravity * 2 * dt1.asSeconds();
-					mPlayerTexture = Jumping;
-					animationU.Update(0, dt2);
-					mPlayer.setTextureRect(animationU.uvRect);
-					//std::cout << counter << std::endl;
-					bBoxPlayer.left = mPlayer.getPosition().x;
-					bBoxPlayer.top = mPlayer.getPosition().y;
-					if (counter > 100) {
-						isJump = false;
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {// lay down
+						mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\layingDown.png");
+						mPlayer.setTexture(mPlayerTexture);
+						sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+						mPlayer.setTextureRect(textureRect);
+						std::cout << "S key pressed" << std::endl;
+						islayingdown = true;
+
+					}
+					else
+						islayingdown = false;
+					//Jumping and shooting controls brother
+
+
+					if ((!islayingdown) || (!isDiagonal)) {
+						if (mouseAngle > 67.5f && mouseAngle < 112.5f) {
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimUp.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(0, -5));
+						}
+						if ((!(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && (mouseAngle > 22.5f && mouseAngle < 67.5f)) {
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimNE.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(2.23, -2.23));
+						}
+						if ((!(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && (mouseAngle > 112.5f && mouseAngle < 157.5f)) {//north west
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimNW.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(-2.23, -2.23));
+						}
+						if (mouseAngle > -67.5f && mouseAngle < -22.5f) {//South East
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimSE.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(2.23, 2.23));
+						}
+						if (mouseAngle > -157.5f && mouseAngle < -112.5f) {//South west
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimSW.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(-2.23, 2.23));
+						}
+						if (mouseAngle > -112.5f && mouseAngle < -67.5f) {//south
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\aimS.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(0, 5));
+						}
+
+
+						if ((mouseAngle > 157.5f && mouseAngle < 180.0f) || (mouseAngle > -180.0f && mouseAngle < -157.5f)) {//west
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\backface.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(-5, 0));
+						}
+
+						if ((!(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && (mouseAngle > -22.5f && mouseAngle < 22.5f)) {//east
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\frontface.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							p_bullets.setBulletVelocity(sf::Vector2f(5, 0));
+						}
+					}
+
+					if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+						isRunning = false;
+					}
+					if (!isDiagonal) {
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {//Run backwards
+							//mPlayerTexture.loadFromFile("D:\\operationM.A.D\\operationM.A.D\\Assets\\backface.png");
+							//mPlayer.setTexture(mPlayerTexture);
+							isFrontFace = false;
+							isBackFace = true;
+							isRunning = true;
+							mPlayerTexture = Running;
+							animationF.Update(1, dt2);
+
+							mPlayer.setTextureRect(animationF.uvRect);
+							if (isSound) {
+								if (!running_sound.getStatus()) {
+									running_sound.play();
+									running_sound.setPlayingOffset(sf::seconds(0.5));
+								}
+							}
+
+							coordi.x -= velocity.getVelocity().x / 10;
+							view2.move(coordi);
+							mPlayer.move(coordi);
+							p_bullets.setBulletVelocity(sf::Vector2f(-5.0f, 0.0f));
+
+
+						}
+
+
+						if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+							isFrontFace = true;
+							isRunning = true;
+							isBackFace = false;
+							mPlayerTexture = Running;
+							animationF.Update(0, dt2);
+
+							mPlayer.setTextureRect(animationF.uvRect);
+							if (isSound) {
+								if (!running_sound.getStatus()) {
+									running_sound.play();
+									running_sound.setPlayingOffset(sf::seconds(0.5));
+								}
+							}
+
+							coordi.x += velocity.getVelocity().x / 10;
+							view2.move(coordi);
+							mPlayer.move(coordi);
+						}
+
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && (mouseAngle > -67.5f && mouseAngle < -22.5f)) {
+						mPlayerTexture = RunningD2;
+						animationD2.Update(0, dt2);
+						mPlayer.setTextureRect(animationF.uvRect);
+						coordi.x += velocity.getVelocity().x / 100;
+						view2.move(coordi);
+						mPlayer.move(coordi);
+						p_bullets.setBulletVelocity(sf::Vector2f(2.23, 2.23));
+						isDiagonal = true;
+						if (isSound) {
+							if (!running_sound.getStatus()) {
+								running_sound.play();
+								running_sound.setPlayingOffset(sf::seconds(0.5));
+							}
+						}
+					}
+					else
+						isDiagonal = false;
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && (mouseAngle > -157.5f && mouseAngle < -122.5f)) {
+						mPlayerTexture = RunningD2;
+						animationD2.Update(1, dt2);
+						mPlayer.setTextureRect(animationF.uvRect);
+						coordi.x -= velocity.getVelocity().x / 100;
+						view2.move(coordi);
+						mPlayer.move(coordi);
+						p_bullets.setBulletVelocity(sf::Vector2f(-2.23, 2.23));
+						isDiagonal = true;
+						if (isSound) {
+							if (!running_sound.getStatus()) {
+								running_sound.play();
+								running_sound.setPlayingOffset(sf::seconds(0.5));
+							}
+						}
+					}
+					else
+						isDiagonal = false;
+					if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)) && (22.5f < mouseAngle && mouseAngle < 67.5f)) {//north east
+
+						mPlayerTexture = RunningD;
+						animationD.Update(0, dt2);
+						mPlayer.setTextureRect(animationD.uvRect);
+						coordi.x += velocity.getVelocity().x / 100;
+						view2.move(coordi);
+						if (isSound) {
+							if (!running_sound.getStatus()) {
+								running_sound.play();
+								running_sound.setPlayingOffset(sf::seconds(0.5));
+							}
+						}
+						mPlayer.move(coordi);
+						p_bullets.setBulletVelocity(sf::Vector2f(2.23, -2.23));
+					}
+					if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)) && (122.5f < mouseAngle && mouseAngle < 157.5f)) {//north west
+
+						mPlayerTexture = RunningD;
+						animationD.Update(1, dt2);
+						mPlayer.setTextureRect(animationD.uvRect);
+						coordi.x -= velocity.getVelocity().x / 100;
+						view2.move(coordi);
+						if (isSound) {
+							if (!running_sound.getStatus()) {
+								running_sound.play();
+								running_sound.setPlayingOffset(sf::seconds(0.5f));
+							}
+						}
+						mPlayer.move(coordi);
+						p_bullets.setBulletVelocity(sf::Vector2f(-2.23f, -2.23f));
+					}
+
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {//jump mechanics................................
+						isJump = true;//the O button corresponds to the number "0"
+
+					}
+
+					/*******SHOOTING*********/
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {//Shoot mechanics//the X button corresponds to the number "0"
+						isShooting = true;
+						if (isSound) {
+							if (!rifle_sound.getStatus()) {
+								rifle_sound.play();
+							}
+						}
+
+					}
+					else {
+						//rifle_sound.stop();
+						isShooting = false;
+						p_bullets.replaceBullet(sf::Vector2f(mPlayer.getPosition().x + 10.0f, mPlayer.getPosition().y + 15.0f));
+
+					}
+
+					/****************/
+					if (mPlayer.getPosition().x < 400.0f) {
+						coordi.x += velocity.getVelocity().x * 10.0f;
+						view2.move(coordi);
+
+						mPlayer.move(coordi);
+					}
+					if (mPlayer.getPosition().x > 4500.0f) {
+						coordi.x -= velocity.getVelocity().x * 10.0f;
+						view2.move(coordi);
+
+						mPlayer.move(coordi);
+					}
+
+
+					//std::cout << mouseAngle<< std::endl;
+
+					coordi.y += gravity * dt1.asSeconds();
+					mPlayer.move(coordi);
+
+
+
+
+					if (isJump) {
+						mPlayer.move(0, -gravity * 2 * dt1.asSeconds());
+						counter += gravity * 2 * dt1.asSeconds();
+						mPlayerTexture = Jumping;
 						animationU.Update(0, dt2);
 						mPlayer.setTextureRect(animationU.uvRect);
+
 						bBoxPlayer.left = mPlayer.getPosition().x;
 						bBoxPlayer.top = mPlayer.getPosition().y;
-						counter = 0.0f;
+						if (counter > 100) {
+							isJump = false;
+							animationU.Update(0, dt2);
+							mPlayer.setTextureRect(animationU.uvRect);
+							bBoxPlayer.left = mPlayer.getPosition().x;
+							bBoxPlayer.top = mPlayer.getPosition().y;
+							counter = 0.0f;
+						}
 					}
-				}
-				if (isShooting) {
+					if (isShooting) {
 
-					p_bullets.Shoot(dt1, mPlayer.getPosition(), isShooting, 2000);
+						p_bullets.Shoot(dt1, mPlayer.getPosition(), isShooting, 2000);
 
-				}
+					}
 
 
-				/*******************COLLISION***********************/
-				if (!(NoOfLives < 1)) {
-					for (int i = 0; i < 6; i++) {
-						if (bBoxPlayer.intersects(high[i].Ebulletcollider())) {
+					/*******************COLLISION***********************/
+					if (!(NoOfLives < 1)) {
+						for (int i = 0; i < 6; i++) {
+							if (bBoxPlayer.intersects(high[i].Ebulletcollider())) {
+								NoOfLives--;
+								if (NoOfLives < 1) {
+									isAlive = false;
+								}
+								std::stringstream ssLives;
+								ssLives << "LIVES = " << NoOfLives;
+								LiveText.setString(ssLives.str());
+							}
+						}
+						/*********LOW1********/
+						low1.E_rand_move(mPlayer.getPosition(), dt2);//random movement of enemy soldier
+						if (bBoxPlayer.intersects(low1.Ecollider())) {
 							NoOfLives--;
 							if (NoOfLives < 1) {
 								//isAlive = false;
@@ -832,98 +875,99 @@ void Game::update() {
 							std::stringstream ssLives;
 							ssLives << "LIVES = " << NoOfLives;
 							LiveText.setString(ssLives.str());
+							HiScore = 0;
 						}
 					}
-					/*********LOW1********/
-					low1.E_rand_move(mPlayer.getPosition(), dt2);//random movement of enemy soldier
-					if (bBoxPlayer.intersects(low1.Ecollider())) {
-						NoOfLives--;
-						if (NoOfLives < 1) {
-							//isAlive = false;
-						}
-						std::stringstream ssLives;
-						ssLives << "LIVES = " << NoOfLives;
-						LiveText.setString(ssLives.str());
-						HiScore = 0;
-					}
-				}
 
 
-				if (low1.Ecollider().intersects(p_bullets.BulletCollider())) {
-					low1.Edeath(true);
-					//low1.E_rand_move_Box(true);
-					HiScore += 100;
-					std::stringstream ssHiScore;
-					ssHiScore << "Hi Score = " << HiScore;
-					HiScoreText.setString(ssHiScore.str());
-
-
-				}
-
-				for (int i = 0; i < 6; i++) {
-					if (high[i].Ecollider().intersects(p_bullets.BulletCollider())) {
-						high[i].Edeath(true);
+					if (low1.Ecollider().intersects(p_bullets.BulletCollider())) {
+						low1.Edeath(true);
+						//low1.E_rand_move_Box(true);
 						HiScore += 100;
 						std::stringstream ssHiScore;
 						ssHiScore << "Hi Score = " << HiScore;
-
 						HiScoreText.setString(ssHiScore.str());
 
-						//	death_sound.play();
-					}
-				}
 
-				//collission with grass
-				for (int i = 0; i < 111; i++) {
-
-					if (bBoxGrass[i].intersects(bBoxPlayer)) {
-
-						mPlayer.move(-coordi);
 					}
 
-				}
-				//collission with 4th wall
+					for (int i = 0; i < 6; i++) {
+						if (high[i].Ecollider().intersects(p_bullets.BulletCollider())) {
+							high[i].Edeath(true);
+							HiScore += 100;
+							std::stringstream ssHiScore;
+							ssHiScore << "Hi Score = " << HiScore;
 
+							HiScoreText.setString(ssHiScore.str());
 
-			//power up mechanism
-				powerUp.power_M(mPlayer.getPosition(), dt2);
-
-				if (p_bullets.BulletCollider().intersects(powerUp.power_collider())) {
-					powerUp.power_final(bBoxGrass);
-				}
-				powerUp.power_move(dt2);
-
-				if (bBoxPlayer.intersects(powerUp.power_collider())) {
-
-					powerUp.OutOfTheWay();
-					powerUp.power_state(false);
-					p_bullets.setBullettexture("..\\operationM.A.D\\Assets\\laser.png");
-					rifle_buffer.loadFromFile("..\\operationM.A.D\\Assets\\lasergun.wav");
-					rifle_sound.setBuffer(rifle_buffer);
-					rifle_sound.setVolume(100.0f);
-
-				}
-				/****************BOSS*********************/
-				if (Boss.Boss_cinematic_1(mPlayer.getPosition())) {
-					if (mPlayer.getPosition().x <= 3900.0) {
-						mPlayer.move(10, 0);
-						view2.move(10, 0);
+							//	death_sound.play();
+						}
 					}
-					if (mPlayer.getPosition().x >= 4300.0) {
-						mPlayer.move(-10, 0);
-						view2.move(-10, 0);
+
+					//collission with grass
+					for (int i = 0; i < 111; i++) {
+
+						if (bBoxGrass[i].intersects(bBoxPlayer)) {
+
+							mPlayer.move(-coordi);
+						}
+
+					}
+
+
+					//power up mechanism
+					powerUp.power_M(mPlayer.getPosition(), dt2);
+
+					if (p_bullets.BulletCollider().intersects(powerUp.power_collider())) {
+						powerUp.power_final(bBoxGrass);
+					}
+					powerUp.power_move(dt2);
+
+					if (bBoxPlayer.intersects(powerUp.power_collider())) {
+
+						powerUp.OutOfTheWay();
+						powerUp.power_state(false);
+						p_bullets.setBullettexture("..\\operationM.A.D\\Assets\\laser.png");
+						rifle_buffer.loadFromFile("..\\operationM.A.D\\Assets\\lasergun.wav");
+						rifle_sound.setBuffer(rifle_buffer);
+						rifle_sound.setVolume(100.0f);
+
+					}
+					/****************BOSS*********************/
+					if (Boss.Boss_cinematic_1(mPlayer.getPosition())) {
+						if (mPlayer.getPosition().x <= 3900.0) {
+							mPlayer.move(10.0f, 0.0f);
+							view2.move(10.0f, 0.0f);
+						}
+						if (mPlayer.getPosition().x >= 4300.0) {
+							mPlayer.move(-10.0f, 0.0f);
+							view2.move(-10.0f, 0.0f);
+						}
+					}
+
+					Boss.Boss_mechanics(mPlayer.getPosition(), dt2, dt1);
+					//std::cout << Boss.Boss_cinematic_1(mPlayer.getPosition()) << std::endl;
+
+
+					if (!isAlive) {
+						
+						
+							mPlayerTexture.loadFromFile("..\\operationM.A.D\\Assets\\deadface.png");
+							mPlayer.setTexture(mPlayerTexture);
+							sf::IntRect textureRect(0, 0, mPlayerTexture.getSize().x, mPlayerTexture.getSize().y);
+							mPlayer.setTextureRect(textureRect);
+							Cutscene_dt += dt2;
+						
+						
+						if (Cutscene_dt > 5.0) {
+							isReset = true;
+							isDead = false;
+						}
+
 					}
 				}
-
-				Boss.Boss_mechanics(mPlayer.getPosition(), dt2, dt1);
-				//std::cout << Boss.Boss_cinematic_1(mPlayer.getPosition()) << std::endl;
-
-
-
-
-
-				/*******************MUSIC***********************/
-
+				
+ 
 			}
 		}
 	}

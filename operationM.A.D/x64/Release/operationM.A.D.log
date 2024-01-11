@@ -39,40 +39,20 @@ D:\operationM.A.D\operationM.A.D\systems.h(92,37): warning C4244: '=': conversio
           [
               T=int
           ]
-D:\operationM.A.D\operationM.A.D\components.h(42,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\operationM.A.D\operationM.A.D\components.h(42,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\operationM.A.D\operationM.A.D\Entities.h(237,16): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\operationM.A.D\operationM.A.D\Entities.h(254,49): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\components.h(39,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\components.h(39,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\Entities.h(249,16): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\operationM.A.D\operationM.A.D\Entities.h(283,49): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\Entities.h(254,44): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\Entities.h(283,44): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\Entities.h(265,49): warning C4305: 'argument': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-D:\operationM.A.D\operationM.A.D\Entities.h(265,43): warning C4305: 'argument': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-D:\operationM.A.D\operationM.A.D\Entities.h(282,51): warning C4305: 'argument': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-D:\operationM.A.D\operationM.A.D\Entities.h(282,44): warning C4305: 'argument': truncation from 'double' to 'T'
-          with
-          [
-              T=float
-          ]
-D:\operationM.A.D\operationM.A.D\Entities.h(294,50): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\Entities.h(294,49): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
@@ -82,119 +62,149 @@ D:\operationM.A.D\operationM.A.D\Entities.h(294,43): warning C4305: 'argument': 
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(182,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+D:\operationM.A.D\operationM.A.D\Entities.h(311,51): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(194,54): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\Entities.h(311,44): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\Entities.h(323,50): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\Entities.h(323,43): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(236,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(248,55): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-D:\operationM.A.D\operationM.A.D\game.h(194,33): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\game.h(248,34): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-D:\operationM.A.D\operationM.A.D\game.h(195,60): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\game.h(249,60): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-D:\operationM.A.D\operationM.A.D\game.h(195,39): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\operationM.A.D\operationM.A.D\game.h(249,39): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-D:\operationM.A.D\operationM.A.D\game.h(205,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+D:\operationM.A.D\operationM.A.D\game.h(250,61): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(250,40): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+D:\operationM.A.D\operationM.A.D\game.h(259,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(394,55): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(520,55): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(394,48): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(520,48): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(401,56): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(527,56): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(401,49): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(527,49): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(408,54): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(534,54): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(408,48): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(534,48): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(415,55): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(541,55): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(415,49): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(541,49): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(493,52): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(627,53): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(493,47): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(627,47): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(505,54): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(645,54): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(505,48): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(645,48): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(519,54): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(670,54): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(519,47): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(670,47): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(530,55): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(686,55): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
-D:\operationM.A.D\operationM.A.D\game.h(530,48): warning C4305: 'argument': truncation from 'double' to 'T'
+D:\operationM.A.D\operationM.A.D\game.h(686,48): warning C4305: 'argument': truncation from 'double' to 'T'
           with
           [
               T=float
           ]
   Generating code
-  1 of 263 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+  0 of 378 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   operationM.A.D.vcxproj -> D:\operationM.A.D\x64\Release\operationM.A.D.exe
